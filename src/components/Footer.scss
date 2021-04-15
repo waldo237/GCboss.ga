@@ -1,0 +1,23 @@
+.footer {
+  font-weight: 600;
+  font-size: calc(10px + 1vmin);
+  div {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-content: center;
+    padding: 15px;
+    color: var(--black);
+    background: var(--secondary-color);
+  }
+}
+.social {
+  margin: 15px;
+}
+.social-link {
+  color: var(--black);
+}
+.footer-credits {
+  display: flex;
+  flex-direction: column;
+}

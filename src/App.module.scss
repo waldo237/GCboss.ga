@@ -1,0 +1,425 @@
+:root {
+  --light: #f5fbfa;
+  --primary-color: #282c34;
+  --secondary-color: #eccd78;
+  --secondary-text: #eccd78;
+  --black: rgb(32, 32, 32);
+}
+.App {
+  text-align: center;
+}
+button[disabled="disabled"],
+button:disabled {
+  cursor: not-allowed;
+  pointer-events: none;
+
+  background-color: rgb(226, 224, 224) !important;
+  color: darkgray !important;
+  border: 2px darkgray !important;
+  text-shadow: none !important;
+}
+/* Styling an indeterminate progress bar */
+
+progress {
+  width: 90%;
+  height: 14px;
+  display: block;
+  -webkit-appearance: none;
+  border: none;
+
+  /* All good till now. Now we'll style the background */
+  &::-webkit-progress-bar {
+    background: black;
+    border-radius: 50px;
+    padding: 2px;
+    box-shadow: 0 1px 0px 0 rgba(255, 255, 255, 0.2);
+  }
+
+  /* Now the value part */
+  &::-webkit-progress-value {
+    border-radius: 50px;
+    box-shadow: inset 0 1px 1px 0 rgba(255, 255, 255, 0.4);
+    background: -webkit-linear-gradient(
+        45deg,
+        transparent,
+        transparent 33%,
+        rgba(0, 0, 0, 0.1) 33%,
+        rgba(0, 0, 0, 0.1) 66%,
+        transparent 66%
+      ),
+      -webkit-linear-gradient(top, rgba(255, 255, 255, 0.25), rgba(0, 0, 0, 0.2)),
+      -webkit-linear-gradient(left, #b69f61,#eccd78);
+
+    /* Looks great, now animating it */
+    background-size: 25px 14px, 100% 100%, 100% 100%;
+    -webkit-animation: move 5s linear 0 infinite;
+  }
+}
+table {
+  margin: 20px auto;
+  width: 90%;
+  thead {
+    overflow-x: scroll;
+    tr {
+      th {
+        font-weight: 400;
+        color: var(--secondary-color);
+      }
+    }
+  }
+  tbody{
+    tr{
+      &:nth-child(even) {
+        background-color: lighten($color: #464545, $amount: 1);
+      }
+      td{
+        font-size: calc(10px + 1vmin) !important;
+        padding: 3px 10px;
+
+      }
+    }
+  }
+}
+
+.flexRows {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start !important;
+}
+
+.container {
+  background-color: var(--primary-color);
+  min-height: 500px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  font-size: calc(10px + 2vmin);
+  color: white;
+}
+.mainContainer {
+  @extend .container;
+  max-width: 800px;
+  width: 96%;
+  margin: auto;
+  padding: 2%;
+  border-radius: 10px;
+  background: linear-gradient(145deg, #24282f, #2b2f38);
+  box-shadow: 20px 20px 60px #22252c, -20px -20px 60px #2e333c;
+  @media screen and (min-width: 800) {
+    margin: 4rem auto;
+
+  }
+}
+.mainContainerCopy {
+  @extend .mainContainer;
+
+  max-width: none;
+}
+.card {
+  background: var(--secondary-color);
+  max-width: 250px;
+  max-height: 80vh;
+  overflow-y: scroll;
+  padding: 10px 15px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start !important;
+  justify-content: flex-start !important;
+  border-radius: 5px;
+  color: var(--primary-color) !important;
+  position: fixed;
+  z-index: 1;
+  left: 1%;
+  top: 2px;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  @media screen and (min-width: 800) {
+    left: 1%;
+    top: 20%;
+  }
+  div {
+    color: var(--primary-color) !important;
+    svg {
+      cursor: pointer;
+      transition: 0.3s ease-in-out;
+      &:hover {
+        transform: scale(1.3);
+      }
+    }
+  }
+}
+.errorCard {
+  @extend .card;
+  max-width: 400px;
+  color: rgb(134, 0, 0) !important;
+  left: 2%;
+  top: 10%;
+  transition: all 0.4s;
+  animation: slideInLeft 0.4s ease-in-out;
+  z-index: 100;
+}
+.errorCardCloseBtn {
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
+  color: inherit;
+  transition: 0.3s ease-in-out;
+  svg {
+    cursor: pointer;
+    transition: 0.3s ease-in-out;
+    &:hover {
+      transform: scale(1.3);
+    }
+  }
+}
+.avatarBtn {
+  @extend .errorCardCloseBtn;
+  @extend .btnSmall;
+  margin: 0px !important;
+  padding: 0px !important;
+  cursor: pointer;
+  &:hover {
+    transform: scale(1.1);
+    background: var(--primary-color) !important;
+  }
+}
+.list {
+  background-color: var(--primary-color);
+  margin: 2%;
+  padding: 2%;
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+  // font-size: calc(2px + 2vmin);
+  box-shadow: 42px 42px 84px #22252c, -42px -42px 84px #2e333c;
+  color: white;
+
+  button {
+    font-size: calc(10px + 1vmin);
+    padding: 12px 30px;
+    color: white;
+    margin: 20px 10px 10px;
+    border-radius: 6px;
+    text-align: center;
+    transition: top 0.01s linear;
+    text-shadow: 0 1px 0 rgba(0, 0, 0, 0.15);
+  }
+}
+
+.justifyStart {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start !important;
+  width: 100%;
+}
+
+/* 3D Button */
+.btn-3d {
+  position: relative;
+  display: inline-block;
+  font-size: inherit;
+  padding: 15px 40px;
+  color: white;
+  // margin: 20px 10px 10px;
+  border-radius: 6px;
+  transition: all 0.3s ease-in-out !important;
+  text-align: center;
+  transition: top 0.01s linear;
+  text-shadow: 0 1px 0 rgba(0, 0, 0, 0.15);
+}
+
+.btnSmall {
+  @extend .btn-3d;
+  padding: 14px 16px;
+  align-self: flex-start;
+  margin: auto;
+  border: 0px;
+  transition: 0.2s ease-in-out;
+  &:hover {
+    background: darken($color: #00000067, $amount: 2);
+  }
+}
+
+.btn-3d:active {
+  top: 9px;
+}
+.red {
+  background: #fa5a5a;
+}
+.yellow {
+  background: var(--secondary-color);
+  color: var(--black) !important;
+  font-weight: 500;
+  &:hover {
+    color: white !important;
+  }
+}
+.green {
+  background: #82c8a0;
+}
+.cyan {
+  background: #7fccde;
+}
+.blue {
+  background: #6698cb;
+}
+.purple {
+  background: #cb99c5;
+}
+.cols {
+  display: flex;
+  flex-direction: row;
+  width: 95%;
+  input, select {
+    width: 65%;
+    min-width: 280px;
+    // font-size: 13px;
+    padding: 10px 20px;
+    border: 0px;
+    margin: auto;
+    border-radius: 6px;
+  }
+  button {
+    margin: auto;
+  }
+}
+
+nav {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 1%;
+  ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+  }
+
+  li {
+    float: left;
+  }
+
+  li a {
+    display: block;
+    color: white;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+  }
+
+  /* Change the link color to #111 (black) on hover */
+  li a:hover {
+    background-color: #111;
+    border-radius: 10px;
+  }
+}
+
+.mainHeader {
+  div {
+    color: var(--secondary-text);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  a {
+    text-decoration: none;
+  }
+  img {
+    width: 80px;
+  }
+}
+
+@-webkit-keyframes slideInLeft {
+  0% {
+    -webkit-transform: translateX(-100%);
+    transform: translateX(-100%);
+    visibility: visible;
+  }
+  100% {
+    -webkit-transform: translateX(0);
+    transform: translateX(0);
+  }
+}
+@keyframes slideInLeft {
+  0% {
+    -webkit-transform: translateX(-100%);
+    transform: translateX(-100%);
+    visibility: visible;
+  }
+  100% {
+    -webkit-transform: translateX(0);
+    transform: translateX(0);
+  }
+}
+
+.spin {
+  -webkit-animation: rotateOut 2s linear infinite;
+  animation: rotateOut 2s linear infinite;
+  -webkit-animation-fill-mode: both;
+  animation-fill-mode: both;
+}
+@-webkit-keyframes rotateOut {
+  0% {
+    -webkit-transform-origin: center;
+    transform-origin: center;
+    opacity: 1;
+  }
+  100% {
+    -webkit-transform-origin: center;
+    transform-origin: center;
+    -webkit-transform: rotate3d(0, 0, 1, 360deg);
+    transform: rotate3d(0, 0, 1, 360deg);
+    opacity: 0;
+  }
+}
+@keyframes rotateOut {
+  0% {
+    -webkit-transform-origin: center;
+    transform-origin: center;
+    opacity: 1;
+  }
+  100% {
+    -webkit-transform-origin: center;
+    transform-origin: center;
+    -webkit-transform: rotate3d(0, 0, 1, 360deg);
+    transform: rotate3d(0, 0, 1, 360deg);
+    opacity: 0;
+  }
+}
+
+.vibration {
+  -webkit-animation: vibrate 3s cubic-bezier(0.445, 0.05, 0.55, 0.95) infinite;
+  animation: vibrate 3s cubic-bezier(0.445, 0.05, 0.55, 0.95) infinite;
+  -webkit-transform: scale(1);
+  transform: scale(1);
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+  -webkit-perspective: 300px;
+  perspective: 300px;
+}
+
+@keyframes vibrate {
+  0.50%,
+  10%,
+  20%,
+  30%,
+  40%,
+  50% {
+    -webkit-transform: scale(0.8);
+    transform: scale(0.8);
+  }
+  5%,
+  15%,
+  25%,
+  35%,
+  45% {
+    -webkit-transform: scale(0.8);
+    transform: scale(0.8);
+  }
+  100% {
+  }
+}
