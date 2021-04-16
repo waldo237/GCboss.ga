@@ -2,7 +2,7 @@ import React, { useContext } from "react";
 import { Link } from "react-router-dom";
 import styles from "../App.module.scss";
 
-import { BiLogIn, BiCopy, BiLogOut } from "react-icons/bi";
+import { BiLogIn, BiCopy, BiLogOut, BiError } from "react-icons/bi";
 import { MdAssignment } from "react-icons/md";
 import { BsCardChecklist } from "react-icons/bs";
 import { Context } from "../store/store";
@@ -33,6 +33,12 @@ function Nav() {
             <Link to="/CopyAssignmentsToNewClassroom">
               {" "}
               <BiCopy /> Copy Blueprint to your Classrooms
+            </Link>
+          </li>
+          <li>
+            <Link to="/errorLog">
+              {" "}
+              <BiError /> Error Log
             </Link>
           </li>
           <li>

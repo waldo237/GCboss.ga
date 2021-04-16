@@ -4,12 +4,13 @@ import Home from "../pages/Home";
 import CourseBlueprint from "../pages/CourseBlueprint";
 import CopyAssignmentsToNewClassroom from "../pages/CopyAssignmentsToNewClassroom";
 import Courses from "../pages/Courses";
+import ErrorLogs from "../pages/ErrorLogs";
 export default function Routes() {
   return (
     <main>
       <Switch>
-      <Route path="/" exact>
-      <Home />
+        <Route path="/" exact>
+          <Home />
         </Route>
         <Route path="/actions" exact>
           <Home />
@@ -20,8 +21,12 @@ export default function Routes() {
         <Route path="/CourseBlueprint">
           <CourseBlueprint />
         </Route>
-        <Route path="/CopyAssignmentsToNewClassroom"><CopyAssignmentsToNewClassroom/></Route>
-       
+        <Route path="/CopyAssignmentsToNewClassroom">
+          <CopyAssignmentsToNewClassroom />
+        </Route>
+        <Route path="/errorLog">
+          <ErrorLogs />
+        </Route>
       </Switch>
     </main>
   );

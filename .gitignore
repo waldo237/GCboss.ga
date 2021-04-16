@@ -7,7 +7,7 @@
 .firebaserc
 firebase-debug.log
 firebase.json
-
+/build
 # testing
 /coverage
 

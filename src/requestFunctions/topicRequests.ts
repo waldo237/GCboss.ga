@@ -1,7 +1,9 @@
 import { StateInterface, TopicInterface } from "../interfaces/interfaces";
 import { getHeaders } from "../components/signInFuncs";
 import { sortByUpdateDate } from "./util";
-
+import { storeRedux } from "../store/storeRedux";
+import { addError } from "../store/slices/errorSlice";
+const dispatchRedux = storeRedux.dispatch;
 /**
  * Creates a topic in the specified classroom
  * sets SET_TARGET_TOPIC_IDS with the id of the newly created topic in the target Classroom
@@ -37,8 +39,10 @@ async function createTopic(courseId: string, state: StateInterface, dispatch: Fu
     // dispatch({ type: 'SET_LOADING', payload: "" });
   } catch (error) {
     console.log(error)
+    
     // dispatch({ type: 'SET_LOADING', payload: "" });
-    // throw error;
+    throw error;
+    
   }
 }
 
@@ -107,6 +111,7 @@ async function createTopics(courseId: string, state: StateInterface, dispatch: F
 
   } catch (error) {
     console.log(error)
+    dispatchRedux(addError({comingFrom:'createTopics', courseId, date:new Date().toLocaleTimeString(), message:error.message}))
     // dispatch({ type: 'SET_ERROR', payload: [{ message: error.message }, ...state.error] });
   }
 }

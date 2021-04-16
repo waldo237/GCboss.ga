@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import styles from "../App.module.scss";
 import { Context } from "../store/store";
 import { getAssignments } from "../requestFunctions/assignmentsRequest";
@@ -8,9 +8,13 @@ import Table from "../components/Table";
 
 export default function CourseBlueprint() {
   const [state, dispatch] = useContext(Context);
-  const { assignments, selectedClassroom, topics } = state;
-  const [loading, setLoading] = useState(false);
+  const { assignments, selectedClassroom, topics, courseId } = state;
 
+  const [loading, setLoading] = useState(false);
+  useEffect(() => {
+    document.title = "Google Classroom API Manager";
+    return () => {};
+  }, [courseId]);
   return (
     <>
       <section className={styles.container}>
