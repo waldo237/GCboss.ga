@@ -33,13 +33,13 @@ export default function CopyAssignmentsToNewClassroom() {
           
         await createTopics(courseReceivingChange.id, state, dispatch);
 
-        // await createAssignments(
-        //     courseReceivingChange.id,
-        //     selectedAssignments,
-        //     selectedTopics,
-        //     state,
-        //     dispatch
-        //   );
+         createAssignments(
+            courseReceivingChange.id,
+            selectedAssignments,
+            selectedTopics,
+            state,
+            dispatch
+          );
           dispatchRedux(incrementProgress(1));
         }
         dispatch({ type: "SET_LOADING", payload: "" });

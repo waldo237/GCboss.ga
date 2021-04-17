@@ -70,13 +70,13 @@ async function createAssignments(courseId: string,
   try {
     for await (const assignment of selectedAssignments) {
       const selectedTopic = selectedTopics.find((topic) => topic.topicId === assignment.topicId)
-      console.log(`before selectedTopic`, selectedTopic)
+      // console.log(`before selectedTopic`, selectedTopic)
       if (selectedTopic) {
 
         // console.log('ids comparizon', `${selectedTopic.topicId}-- ${assignment.topicId}`)
         // if (selectedTopic.topicId === assignment.topicId) {
         const targetTopic = targetTopics.filter((targetTopic) => targetTopic.name === selectedTopic.name)[0]
-        console.log('name comparizon', `${targetTopic.name}-- ${selectedTopic.name}`)
+        // console.log('name comparizon', `${targetTopic.name}-- ${selectedTopic.name}`)
 
         // console.log('targetTopic', targetTopic.topicId)
         delete assignment['id']; //delete the id because is an invalid argument
@@ -92,10 +92,10 @@ async function createAssignments(courseId: string,
         //swap the value before sending the request.
         if (!assignment['workType']) {
           await createCourseWorkMaterials(courseId, { ...state, assignment }, dispatch); //mock
-          console.log('createCourseWorkMaterials', `${assignment.topicId}--- ${assignment.title}`)
+          // console.log('createCourseWorkMaterials', `${assignment.topicId}--- ${assignment.title}`)
 
         } else {
-          console.log('createCourseWork', `${assignment.topicId}--- ${assignment.title}`)
+          // console.log('createCourseWork', `${assignment.topicId}--- ${assignment.title}`)
           await createCourseWork(courseId, { ...state, assignment }, dispatch); //mock
 
         }

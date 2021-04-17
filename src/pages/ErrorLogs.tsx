@@ -1,14 +1,16 @@
-import ReactPDF, { PDFViewer,PDFDownloadLink } from "@react-pdf/renderer";
-import React, { useEffect } from "react";
+import React, { useContext, useEffect } from "react";
+import ReactPDF, { PDFDownloadLink } from "@react-pdf/renderer";
 import styles from "../App.module.scss";
-import BtnLoad from "../components/BtnLoad";
 import MyDocument from "../components/ErrorLogToPDF";
 import Table from "../components/Table";
 import { useAppSelector } from "../store/hooks";
 import { selectError } from "../store/slices/errorSlice";
+import { Context } from "../store/store";
 
 export default function Home() {
   const errors = useAppSelector(selectError);
+  const [state,] = useContext(Context);
+  const {profile} = state;
   useEffect(() => {
     document.title = "GCboss Error Log";
     return () => {};
@@ -20,32 +22,18 @@ export default function Home() {
         {errors.length ? (
           <Table
             items={errors}
-            title={"Current Errors"}
+            title={`Errors from account ${profile.user.emailAddress}`}
             selection={["courseId", "date", "message", "comingFrom"]}
           />
         ) : (
           <p>There were not errors in the previous operations!😊</p>
         )}
         {errors.length ? (
-          // <BtnLoad
-          //   action={() =>
-          //     () => (
-          //       <PDFViewer>
-          //         <MyDocument />
-          //       </PDFViewer>
-          //     )
-          //   }
-          //   identifier="pdf"
-          //   text={"Save error log to PDF"}
-          //   directCallback
-          // />
-          <PDFDownloadLink document={<MyDocument errors={errors} />} fileName="somename.pdf">
+          <PDFDownloadLink document={<MyDocument errors={errors}  title={`Errors from account ${profile.user.emailAddress}`}/>} fileName={`Errors from account ${profile.user.emailAddress.split('@')[0]}`}>
           {({ blob, url, loading, error }) =>
             loading ? 'Loading document...' : 'Download now!'
           }
         </PDFDownloadLink>
-            
-         
         ) : null}
       </main>
     </>

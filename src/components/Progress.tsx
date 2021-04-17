@@ -6,7 +6,7 @@ export default function Progress(props:{value:number, total:number}) {
     const percentage = (100 * value) / total;
     return (
         <div className={styles.flexRows}>
-            <small>{percentage} %</small>
+            <small>{percentage.toFixed(0)} %</small>
             <progress value={percentage} max="100"></progress>
                 {(value && total)?<div><small>{value}/</small> <small>{total}</small></div>:null}
         </div>
