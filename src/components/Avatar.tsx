@@ -38,7 +38,7 @@ const Avatar = (props: { size: number; user: UserInterface }) => {
     justifySelft: "center",
     textShadow: "var(--text-shadow)",
     fontSize: `${size / 2.5}px`,
-  };
+  }; 
   return (
     <>
       {user&& user.permissionId ? (
