@@ -31,7 +31,7 @@ export default function Footer() {
       >
         <FaLinkedin className="social" size={30} />
       </a>
-      <a 
+      <a d
         rel="noopener noreferrer"
         href="https://www.facebook.com/milanes237/"
         target="_blank"
