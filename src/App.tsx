@@ -6,27 +6,13 @@ import Footer from "./components/Footer";
 import Nav from "./components/Nav";
 import Routes from "./components/Routes";
 import SelectedClassroom from "./components/SelectedClassroom";
-import { signIn } from "./components/signInFuncs";
+import { loadAuth, signIn } from "./components/signInFuncs";
 import { Context } from "./store/store";
+import { useLocation } from 'react-router-dom'
+import NotLoggedInWarning from "./components/NotLoggedInWarning";
 
-
-function loadAuth(dispatch:Function) {
-  // eslint-disable-next-line no-restricted-globals
-  var fragmentString = location.hash.substring(1);
-  var params: any = {};
-  var regex = /([^&=]+)=([^&]*)/g,
-    m;
-  while ((m = regex.exec(fragmentString))) {
-    params[decodeURIComponent(m[1])] = decodeURIComponent(m[2]);
-  }
-  if (Object.keys(params).length > 0) {
-    localStorage.setItem("oauth2", JSON.stringify(params));
-    if (params["state"] && params["state"] === "try_sample_request") {
-      signIn(dispatch);
-    }
-  }
-}
 function App() {
+  const {pathname} = useLocation();
   const [, dispatch] = useContext(Context);
 
   useEffect(() => {
@@ -45,11 +31,16 @@ function App() {
           payload: JSON.parse(savedAssignments),
         });
       const savedTopics = localStorage.getItem("selectedTopics");
-      if (savedTopics)dispatch({type: "SET_SELECTED_TOPICS",payload: JSON.parse(savedTopics),});
-        loadAuth(dispatch);
-        signIn(dispatch);
+      if (savedTopics)
+        dispatch({
+          type: "SET_SELECTED_TOPICS",
+          payload: JSON.parse(savedTopics),
+        });
+
+      loadAuth(dispatch, pathname);
+      signIn(dispatch, pathname);
     });
-  }, [dispatch]);
+  }, []);
 
   const unmounted = useRef(false);
   useEffect(() => {
@@ -67,13 +58,14 @@ function App() {
               src={process.env.PUBLIC_URL + "/google-classroom.png"}
               alt="google classroom icon"
             />
-            <h1>Google Classroom Admin</h1>
+            <h1>GCboss</h1>
           </div>
         </Link>
 
         <ErrorCard />
         <SelectedClassroom />
         <Nav />
+        <NotLoggedInWarning/>
       </header>
       <>
         <Routes />

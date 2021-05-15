@@ -78,8 +78,8 @@ export default function Footer() {
     </div>
 
     <div>
-      <div>developed by Waldo Milanes</div>
-      <span>&reg;</span>
+      <div>Developed by Waldo Milanes<span>&reg;</span></div>
+      
     </div>
   </footer>
   )

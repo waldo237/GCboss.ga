@@ -6,7 +6,7 @@ var YOUR_REDIRECT_URI = process.env.REACT_APP_REDIRECT;
 
 // If there's an access token, try an API request.
 // Otherwise, start OAuth 2.0 flow.
-function signIn(dispatch?: Function) {
+function signIn(dispatch: Function, pathName:string) {
   const savedLocally = localStorage.getItem('oauth2');
   if (savedLocally) var params = JSON.parse(savedLocally);
   if (params && params['access_token']) {
@@ -16,8 +16,8 @@ function signIn(dispatch?: Function) {
       'access_token=' + params['access_token']);
     xhr.onreadystatechange = function (e) {
       if (xhr.readyState === 4 && xhr.status === 200) {
-      
-       
+
+
         dispatch && dispatch({ type: 'SET_PROFILE', payload: JSON.parse(xhr.response) });
         localStorage.setItem('profile', xhr.response);
         dispatch && dispatch({ type: 'SET_IS_LOGGED_IN', payload: true });
@@ -28,9 +28,9 @@ function signIn(dispatch?: Function) {
     };
     xhr.send(null);
   } else {
-    oauth2SignIn();
+    if(pathName !== '/') oauth2SignIn();
   }
- return Promise
+  return Promise
 }
 
 /*
@@ -68,6 +68,21 @@ function oauth2SignIn() {
   document.body.appendChild(form);
   form.submit();
 }
+export function loadAuth(dispatch: Function, pathName:string) {
+  // eslint-disable-next-line no-restricted-globals
+  var fragmentString = location.hash.substring(1);
+  var params: any = {};
+  var regex = /([^&=]+)=([^&]*)/g, m;
+  while ((m = regex.exec(fragmentString))) {
+    params[decodeURIComponent(m[1])] = decodeURIComponent(m[2]);
+  }
+  if (Object.keys(params).length > 0) {
+    localStorage.setItem("oauth2", JSON.stringify(params));
+    if (params["state"] && params["state"] === "try_sample_request") {
+      signIn(dispatch, pathName);
+    }
+  }
+}
 
 function signOut(dispatch: Function) {
   dispatch({ type: 'SET_PROFILE', payload: {} })
@@ -76,8 +91,8 @@ function signOut(dispatch: Function) {
   localStorage.removeItem('oauth2')
   localStorage.removeItem('profile')
 }
-function getHeaders(){
-  const auth = JSON.parse(localStorage.getItem('oauth2')|| "")
+function getHeaders() {
+  const auth = JSON.parse(localStorage.getItem('oauth2') || "")
   return { 'Authorization': `Bearer ${auth.access_token}`, 'Accept': 'application/json', 'Content-Type': 'application/json' }
 }
 export { signIn, signOut, getHeaders }
