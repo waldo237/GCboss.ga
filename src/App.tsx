@@ -11,7 +11,7 @@ import { Context } from "./store/store";
 import { useLocation } from 'react-router-dom'
 import NotLoggedInWarning from "./components/NotLoggedInWarning";
 
-function App() {
+function App() { 
   const {pathname} = useLocation();
   const [, dispatch] = useContext(Context);
 
