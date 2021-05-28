@@ -48,7 +48,7 @@ progress {
         transparent 66%
       ),
       -webkit-linear-gradient(top, rgba(255, 255, 255, 0.25), rgba(0, 0, 0, 0.2)),
-      -webkit-linear-gradient(left, #b69f61,#eccd78);
+      -webkit-linear-gradient(left, #b69f61, #eccd78);
 
     /* Looks great, now animating it */
     background-size: 25px 14px, 100% 100%, 100% 100%;
@@ -67,15 +67,14 @@ table {
       }
     }
   }
-  tbody{
-    tr{
+  tbody {
+    tr {
       &:nth-child(even) {
         background-color: lighten($color: #464545, $amount: 1);
       }
-      td{
+      td {
         font-size: calc(10px + 1vmin) !important;
         padding: 3px 10px;
-
       }
     }
   }
@@ -108,7 +107,6 @@ table {
   box-shadow: 20px 20px 60px #22252c, -20px -20px 60px #2e333c;
   @media screen and (min-width: 800) {
     margin: 4rem auto;
-
   }
 }
 .mainContainerCopy {
@@ -273,7 +271,8 @@ table {
   display: flex;
   flex-direction: row;
   width: 95%;
-  input, select {
+  input,
+  select {
     width: 65%;
     min-width: 280px;
     // font-size: 13px;
