@@ -19,7 +19,12 @@ const Dashboard = () => {
           >
             <IoIosCloseCircleOutline
               type="button"
-              onClick={()=> dispatch({type:'SET_PROFILE_DASHBOARD', payload: !state.profileDashboard})}
+              onClick={() =>
+                dispatch({
+                  type: "SET_PROFILE_DASHBOARD",
+                  payload: !state.profileDashboard,
+                })
+              }
             />
           </div>
 
