@@ -6,17 +6,15 @@ import { getCourse } from "../requestFunctions/courseRequests";
 import { Context } from "../store/store";
 import BtnLoad from "./BtnLoad";
 
-
-
-function getInput(e: any, dispatch:Function) {
+function getInput(e: any, dispatch: Function) {
   e.preventDefault();
-  dispatch({type:'SET_COURSE_ID', payload:e.target.value});
+  dispatch({ type: "SET_COURSE_ID", payload: e.target.value });
 }
 
 export default function ClassroomSelector() {
-  const [state, dispatch] = useContext(Context)
+  const [state, dispatch] = useContext(Context);
 
- const {courses, courseId,profile, selectedClassroom} = state;
+  const { courses, courseId, profile, selectedClassroom } = state;
   const courseIds = courses ? courses.map((c: any) => c.id) : [];
   const memoizedCourseId = useMemo(() => courseId, [courseId]);
   return (
@@ -37,13 +35,17 @@ export default function ClassroomSelector() {
       </select>
 
       <BtnLoad
-        
         action={() => {
           getCourse(courseId, profile, dispatch)
             .then(() => {
               getAssignments(state.selectedClassroom.id, dispatch);
             })
-            .catch((err) => dispatch({ type: 'SET_ERROR', payload: ([{ message: err.message }])}));
+            .catch((err) =>
+              dispatch({
+                type: "SET_ERROR",
+                payload: [{ message: err.message }],
+              })
+            );
         }}
         directCallback
         identifier="model-selector"
