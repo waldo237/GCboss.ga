@@ -34,7 +34,7 @@ async function getAllCourses<T>(dispatch: Function): Promise<T[]> {
  *  with the most recently created coming first.
  * @param dispatch is a regular dispatch function from a reducer
  */
- async function getCoursesArray<T>(dispatch:Function): Promise<T[]> {
+async function getCoursesArray<T>(dispatch: Function): Promise<T[]> {
   let results: Array<T> = [];
   try {
     await fetch(`https://classroom.googleapis.com/v1/courses?courseStates=ACTIVE&key=${process.env.REACT_APP_API_KEY}`, { headers: getHeaders() })
@@ -79,13 +79,13 @@ async function getCourse(id: string, profile: { user: UserInterface; }, dispatch
         localStorage.setItem('selectedClassroom', JSON.stringify(modifiedRes));
       })
       .catch((er: any) => { throw new Error(er); });
- dispatch({ type: 'SET_LOADING', payload: "" });
+    dispatch({ type: 'SET_LOADING', payload: "" });
   } catch (error) {
     console.log(error)
     // dispatch({ type: 'SET_ERROR', payload: [{ message: error.message }] });
-     dispatch({ type: 'SET_LOADING', payload: "" });
+    dispatch({ type: 'SET_LOADING', payload: "" });
   }
   return null;
 }
 
-export {getCourse, getAllCourses, getCoursesArray}
+export { getCourse, getAllCourses, getCoursesArray }

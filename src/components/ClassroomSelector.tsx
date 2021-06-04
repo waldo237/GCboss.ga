@@ -38,7 +38,7 @@ export default function ClassroomSelector() {
         action={() => {
           getCourse(courseId, profile, dispatch)
             .then(() => {
-              getAssignments(state.selectedClassroom.id, dispatch);
+              getAssignments(courseId, dispatch);
             })
             .catch((err) =>
               dispatch({
