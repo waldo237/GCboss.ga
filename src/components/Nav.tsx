@@ -1,6 +1,5 @@
 import React, { useContext } from "react";
 import { Link } from "react-router-dom";
-import { useLocation } from 'react-router-dom'
 import styles from "../App.module.scss";
 
 import { BiLogIn, BiCopy, BiLogOut, BiError } from "react-icons/bi";
@@ -13,7 +12,7 @@ import { signIn, signOut } from "./signInFuncs";
 function Nav() {
   const [state, dispatch] = useContext(Context);
   const { profile: user } = state;
-  const {pathname} = useLocation()
+
   return (
     <>
       <nav>
@@ -52,7 +51,7 @@ function Nav() {
               <button
                 type="button"
                 className={`${styles.blue} ${styles.btnSmall} ${styles.vibration}`}
-                onClick={() => signIn(dispatch, '/home')}
+                onClick={() => signIn(dispatch)}
               >
                 <BiLogIn /> Sign in
               </button>

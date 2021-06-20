@@ -141,6 +141,7 @@ async function undoOldActions(state: StateInterface, dispatch: Function) {
             } else {
               await deleteCourseWork(courseToBeEdited.id, id!, state, dispatch); //mock
             }
+            await Promise.resolve(setTimeout(() => {}, 2000))
           }
         }
         breaker = error.length > 0;

@@ -63,6 +63,7 @@ async function getCoursesArray<T>(dispatch: Function): Promise<T[]> {
 /**
  * @param id  Identifier of the course to return. This identifier can be either
  * the Classroom-assigned identifier or an alias.
+ * @param profile the profile of the current user.
  * @param dispatch a callback function that changes the state ither for selectedcourse or error
  * @returns a course object and sets the state at the same time.
  */

@@ -3,6 +3,7 @@ import styles from "../App.module.scss";
 import { FiMinimize2, FiMaximize2 } from "react-icons/fi";
 import { Context } from "../store/store";
 import { formatDistanceToNow } from "date-fns";
+import { isDate} from "date-fns/esm";
 
 export default function SelectedClassroom() {
   const [state] = useContext(Context);
@@ -10,14 +11,13 @@ export default function SelectedClassroom() {
   const { selectedClassroom } = state;
   const [minimized, setMinimized] = useState(true);
 
-
   if (selectedClassroom) {
     const {
       name,
       id,
       description,
       courseState,
-      creationTime, 
+      creationTime,
       user,
       dateItWasSaved,
     } = selectedClassroom;
@@ -51,9 +51,10 @@ export default function SelectedClassroom() {
                 </p>
                 <p>
                   <strong>creationTime:</strong>{" "}
-                  {formatDistanceToNow(new Date(creationTime), {
+                  {!isNaN(Date.parse(creationTime)) && formatDistanceToNow(new Date(creationTime), {
                     addSuffix: true,
                   })}
+               
                 </p>
               </>
             ) : (
@@ -61,19 +62,18 @@ export default function SelectedClassroom() {
                 <small>
                   <strong>name:</strong> {name}
                 </small>
-          
-                  <div className={styles.flexRows}>
-                    <small>
-                      <strong>Saved by:</strong> {user.emailAddress}
-                    </small>
-                    <small>
-                      <strong>It was saved:</strong>{" "}
-                      {formatDistanceToNow(new Date(dateItWasSaved), {
-                        addSuffix: true,
-                      })}
-                    </small>
-                  </div>
-              
+
+                <div className={styles.flexRows}>
+                  <small>
+                    <strong>Saved by:</strong> {user.emailAddress}
+                  </small>
+                  <small>
+                    <strong>It was saved:</strong>{" "}
+                    {!isNaN(Date.parse(dateItWasSaved)) &&  formatDistanceToNow(new Date(dateItWasSaved), {
+                      addSuffix: true,
+                    })}
+                  </small>
+                </div>
               </>
             )}
           </div>

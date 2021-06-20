@@ -6,7 +6,7 @@ var YOUR_REDIRECT_URI = process.env.REACT_APP_REDIRECT;
 
 // If there's an access token, try an API request.
 // Otherwise, start OAuth 2.0 flow.
-function signIn(dispatch: Function, pathName: string) {
+function signIn(dispatch: Function) {
   const savedLocally = localStorage.getItem('oauth2');
   if (savedLocally) var params = JSON.parse(savedLocally);
   if (params && params['access_token']) {
@@ -28,7 +28,7 @@ function signIn(dispatch: Function, pathName: string) {
     };
     xhr.send(null);
   } else {
-    if (pathName !== '/') oauth2SignIn();
+    oauth2SignIn();
   }
   return Promise
 }
@@ -68,7 +68,8 @@ function oauth2SignIn() {
   document.body.appendChild(form);
   form.submit();
 }
-export function loadAuth(dispatch: Function, pathName: string) {
+
+export function loadAuth(dispatch: Function) {
   // eslint-disable-next-line no-restricted-globals
   var fragmentString = location.hash.substring(1);
   var params: any = {};
@@ -79,7 +80,7 @@ export function loadAuth(dispatch: Function, pathName: string) {
   if (Object.keys(params).length > 0) {
     localStorage.setItem("oauth2", JSON.stringify(params));
     if (params["state"] && params["state"] === "try_sample_request") {
-      signIn(dispatch, pathName);
+      signIn(dispatch);
     }
   }
 }

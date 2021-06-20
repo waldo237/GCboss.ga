@@ -37,8 +37,8 @@ function App() {
           payload: JSON.parse(savedTopics),
         });
 
-      loadAuth(dispatch, pathname);
-      signIn(dispatch, pathname);
+      loadAuth(dispatch);
+      if (pathname !== '/') signIn(dispatch,);
     });
   }, []);
 

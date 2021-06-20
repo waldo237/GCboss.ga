@@ -66,6 +66,7 @@ async function deleteCourseWorkMaterials(courseId: string,id: string, state: Sta
           const er = await res.json();
           throw new Error(er.error.message);
         }
+        await Promise.resolve(setTimeout(() => {}, 1000 ))
         return res.json();
       })
       .then(async (res: any) => {

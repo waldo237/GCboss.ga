@@ -39,10 +39,10 @@ async function createTopic(courseId: string, state: StateInterface, dispatch: Fu
     // dispatch({ type: 'SET_LOADING', payload: "" });
   } catch (error) {
     console.log(error)
-    
+
     // dispatch({ type: 'SET_LOADING', payload: "" });
     throw error;
-    
+
   }
 }
 
@@ -111,7 +111,7 @@ async function createTopics(courseId: string, state: StateInterface, dispatch: F
 
   } catch (error) {
     console.log(error)
-    dispatchRedux(addError({comingFrom:'createTopics', courseId, date:new Date().toLocaleTimeString(), message:error.message}))
+    dispatchRedux(addError({ comingFrom: 'createTopics', courseId, date: new Date().toLocaleTimeString(), message: error.message }))
     // dispatch({ type: 'SET_ERROR', payload: [{ message: error.message }, ...state.error] });
   }
 }
@@ -125,6 +125,7 @@ async function deleteTopic(courseId: string, id: string, state: StateInterface, 
           const er = await res.json();
           throw new Error(er.error.message);
         }
+        await Promise.resolve(setTimeout(() => {}, 1000))
         return res.json();
       })
       .then(async (res: any) => {

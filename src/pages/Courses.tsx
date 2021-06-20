@@ -17,7 +17,7 @@ export default function Courses() {
         <BtnLoad
           action={getAllCourses}
           identifier="GetlistofBtn"
-          text="Get list of classrooms"
+          text="Load classrooms"
           classNames={styles.green}
         />
         <ClassroomSelector />
