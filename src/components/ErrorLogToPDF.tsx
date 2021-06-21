@@ -1,7 +1,7 @@
 import React from "react";
 import { Page, Text, View, Document, StyleSheet } from "@react-pdf/renderer";
 import { ErrorState } from "../store/slices/errorSlice";
-
+import { v4} from 'uuid'
 // Create styles
 const styles = StyleSheet.create({
   page: {
@@ -33,11 +33,12 @@ const styles = StyleSheet.create({
   tableCell: { margin: "auto", marginTop: 5, fontSize: 10 },
 });
 
-export default function MyDocument(props: {
-  errors: ErrorState[];
+export default React.memo(function MyDocument(props: {
+  errCb:Function;
   title: string;
 }) {
-  const { errors, title } = props;
+  const { errCb, title } = props;
+  const errors:ErrorState[] = errCb();
   return ( <Document>
       <Page size="A4" style={styles.page}>
         <View style={styles.table}>
@@ -69,7 +70,8 @@ export default function MyDocument(props: {
           </View>
 
           {errors.map((error) => (
-            <View style={styles.tableRow} break>
+
+            <View key={v4()} style={styles.tableRow} break>
               <View style={styles.tableCol} wrap>
                 <Text style={styles.tableCell} wrap>
                   {error.id}
@@ -96,4 +98,4 @@ export default function MyDocument(props: {
       </Page>
     </Document>
   );
-}
+})

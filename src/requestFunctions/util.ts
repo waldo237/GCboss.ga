@@ -1,6 +1,6 @@
 
 import { AssignmentInterface } from "../interfaces/interfaces";
-import { addError } from "../store/slices/errorSlice";
+import { addError, toggle } from "../store/slices/errorSlice";
 import { resetLoading, setLoadingB } from "../store/slices/loadingSlice";
 import { storeRedux } from "../store/storeRedux";
 const dispatchRedux = storeRedux.dispatch;
@@ -33,6 +33,7 @@ class ColorFactory {
 }
 function reportErr(comingFrom:string, id:string, err:any){
   dispatchRedux(addError({ comingFrom, id, date: new Date().toLocaleTimeString(), message: err.message }))
+  dispatchRedux(toggle(true))
 
 }
 function stopLoadingButton(){
@@ -42,5 +43,6 @@ function stopLoadingButton(){
 function labelLoadingngButton(s:string){
   dispatchRedux(setLoadingB(s))
 }
+
 
 export { ColorFactory, sortByUpdateDate, reportErr, resetLoading, stopLoadingButton, labelLoadingngButton }

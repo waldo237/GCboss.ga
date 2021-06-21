@@ -41,7 +41,7 @@ export async function deleteCourseWork(courseId: string, id: string, state: Stat
           const er = await res.json();
           throw new Error(er.error.message);
         }
-        await Promise.resolve(setTimeout(() => {}, 1000))
+        // await Promise.resolve(setTimeout(() => {}, 1000))
         return res.json();
       })
       .catch((er: any) => { throw new Error(er); });

@@ -15,7 +15,6 @@ const initialState = {
   isLoggedIn: false,
   profileDashboard: false,
   selectedClassroom: null,
-  error: [],
   logs:[]
 };
 let Context: any;

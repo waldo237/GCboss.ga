@@ -5,6 +5,7 @@ import { createCourseWork, deleteCourseWork } from "./classWorkRequests";
 import { createCourseWorkMaterials, deleteCourseWorkMaterials, getCourseWorkMaterials } from "./courseWorkMaterialsRequests";
 import { getCoursesArray } from "./courseRequests";
 import { reportErr, stopLoadingButton } from "./util";
+import { storeRedux } from "../store/storeRedux";
 
 /**
  * Returns a list of course work and course work material that the requester is permitted to view.
@@ -59,10 +60,11 @@ async function createAssignments(courseId: string,
   selectedAssignments: AssignmentInterface[], selectedTopics: TopicInterface[],
   state: StateInterface, dispatch: Function) {
   const targetTopics = await getTopicArray(courseId, dispatch);
-
-  try {
-    for await (const assignment of selectedAssignments) {
+console.log('ouside')
+  for await (const assignment of selectedAssignments) {
+    try {
       const selectedTopic = selectedTopics.find((topic) => topic.topicId === assignment.topicId)
+      console.log('for try selectedTopic:', selectedTopic)
       if (selectedTopic) {
 
         const targetTopic = targetTopics.filter((targetTopic) => targetTopic.name === selectedTopic.name)[0]
@@ -81,10 +83,10 @@ async function createAssignments(courseId: string,
         }
 
       }
+    } catch (error) {
+      console.log(error)
+      reportErr('createAssignments', "", error)
     }
-  } catch (error) {
-    console.log(error)
-    reportErr('createAssignments', "", error)
   }
 }
 
@@ -101,8 +103,8 @@ async function undoActions(state: StateInterface, dispatch: Function) {
  */
 async function undoOldActions(state: StateInterface, dispatch: Function) {
   const coursesToBeEdited = await getCoursesArray<CourseInterface>(dispatch);
-  const { assignments: localAssignments, topics: localTopics, error } = state;
-
+  const { assignments: localAssignments, topics: localTopics } = state;
+  const { error: { errs: error } } = storeRedux.getState();
   const titlesFromlocalAssignments = localAssignments.map((courseWork: AssignmentInterface) => courseWork.title); //titles from locally saved array of assignments
   const titlesFromLocalTopics = localTopics.map((topic: TopicIdsInterface) => topic.name); //titles from locally saved array of topics
   let topicAccumulator: any = {};
@@ -122,10 +124,10 @@ async function undoOldActions(state: StateInterface, dispatch: Function) {
             } else {
               await deleteCourseWork(courseToBeEdited.id, id!, state, dispatch); //mock
             }
-            await Promise.resolve(setTimeout(() => { }, 2000))
+            // await Promise.resolve(setTimeout(() => { }, 2000))
           }
         }
-        breaker = error.length > 0;
+        // breaker = error && error.length > 0;
       }
       //delete Topics
       if (targetTopics) {
@@ -137,7 +139,7 @@ async function undoOldActions(state: StateInterface, dispatch: Function) {
               topicAccumulator[topicId] = true;
             }
           }
-          breaker = error.length > 0;
+          // breaker = error.length > 0;
         }
       }
       stopLoadingButton()

@@ -83,26 +83,26 @@ async function getTopicArray(courseId: string, dispatch: Function) {
 }
 
 /**
- * iterates over all the current classrooms and the saved classwork
- * and creates  new classwork in the target classrooms. It sets a hashmap <currentTopicId, targetTopicId>
- * @param classwork
- * @param targetCourseTopicIds
+ * Loads topics from the model in the state. It sends requests
+ * to create those topics in the target course. 
+ * @param courseId
+ * @param state
  * @param dispatch
- * @param setLoading
  */
 async function createTopics(courseId: string, state: StateInterface, dispatch: Function) {
   const { topics } = state;
+  console.log(`topics`, topics)
   let breaker: boolean = false;
-  try {
-    for (const topic of topics) {
+  for (const topic of topics) {
+    try {
       if (!breaker) {
         await createTopic(courseId, { ...state, topic }, dispatch); //mock
       }
-      breaker = state.error.length > 0;
+      // breaker = state.error.length > 0;
+    } catch (error: any) {
+      console.log(error)
+      reportErr('createTopics', courseId, error)
     }
-  } catch (error:any) {
-    console.log(error)
-    reportErr('createTopics', courseId, error)
   }
 }
 
@@ -115,7 +115,7 @@ async function deleteTopic(courseId: string, id: string, state: StateInterface, 
           const er = await res.json();
           throw new Error(er.error.message);
         }
-        await Promise.resolve(setTimeout(() => { }, 1000))
+        // await Promise.resolve(setTimeout(() => { }, 1000))
         return res.json();
       })
       .catch((er: any) => { throw new Error(er); });
