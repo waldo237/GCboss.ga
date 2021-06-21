@@ -1,6 +1,6 @@
 import React, {ReactNode, useState}  from 'react'
 import './ToolTip.scss'
-
+import styles from "../App.module.scss";
 export default function ToolTip(props:{ children?:ReactNode, text:String, enable:boolean }) {
     const {children, text, enable} = props
     const [show, setShow] = useState(false);
@@ -14,7 +14,7 @@ export default function ToolTip(props:{ children?:ReactNode, text:String, enable
         <div
           onMouseEnter={() => setShow(true)}
           onMouseLeave={() => setShow(false)}
-       
+          className={styles.cols}
         >
           {children}
         </div>

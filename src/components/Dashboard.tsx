@@ -5,6 +5,8 @@ import { IoIosCloseCircleOutline } from "react-icons/io";
 import styles from "../App.module.scss";
 import { Context } from "../store/store";
 import Avatar from "./Avatar";
+import { signOut } from "./signInFuncs";
+import { BiLogOut } from "react-icons/bi";
 
 const Dashboard = () => {
   const [state, dispatch] = useContext(Context);
@@ -45,7 +47,16 @@ const Dashboard = () => {
               <div className=" dash-icon">
                 <FaSignOutAlt />
               </div>
-              <h5 className="dash-action">Sign out</h5>
+              <h5 className="dash-action">
+              <button
+                type="button"
+                className={`${styles.red} ${styles.btnSmall}`}
+                onClick={() => signOut(dispatch)}
+              >
+                <BiLogOut /> Sign out
+              </button>
+          
+                </h5>
             </div>
           </div>
         </div>

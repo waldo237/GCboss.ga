@@ -8,11 +8,11 @@ import Routes from "./components/Routes";
 import SelectedClassroom from "./components/SelectedClassroom";
 import { loadAuth, signIn } from "./components/signInFuncs";
 import { Context } from "./store/store";
-import { useLocation } from 'react-router-dom'
+import { useLocation } from "react-router-dom";
 import NotLoggedInWarning from "./components/NotLoggedInWarning";
 
-function App() { 
-  const {pathname} = useLocation();
+function App() {
+  const { pathname } = useLocation();
   const [, dispatch] = useContext(Context);
 
   useEffect(() => {
@@ -38,7 +38,7 @@ function App() {
         });
 
       loadAuth(dispatch);
-      if (pathname !== '/') signIn(dispatch,);
+      if (pathname !== "/") signIn(dispatch);
     });
   }, []);
 
@@ -61,11 +61,10 @@ function App() {
             <h1>GCboss</h1>
           </div>
         </Link>
-
         <ErrorCard />
         <SelectedClassroom />
         <Nav />
-        <NotLoggedInWarning/>
+        <NotLoggedInWarning />
       </header>
       <>
         <Routes />

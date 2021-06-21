@@ -1,6 +1,6 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import React, { useContext, useMemo } from "react";
 import styles from "../App.module.scss";
+import {BiSelectMultiple} from 'react-icons/bi'
 import { getAssignments } from "../requestFunctions/assignmentsRequest";
 import { getCourse } from "../requestFunctions/courseRequests";
 import { Context } from "../store/store";
@@ -20,6 +20,7 @@ export default function ClassroomSelector() {
 
   return (
     <section className={styles.cols}>
+      <ToolTip text='Please load the classrooms before picking.' enable={courseIds&& courseIds.length=== 0}>
       <select
         name="courseId"
         onChange={(e) => getInput(e, dispatch)}
@@ -34,6 +35,8 @@ export default function ClassroomSelector() {
           </option>
         ))}
       </select>
+
+      </ToolTip>
       
       <ToolTip text="You must pick a classroom id first!" enable={courseId === ""} >
         <BtnLoad
@@ -46,6 +49,7 @@ export default function ClassroomSelector() {
           disableOn={courseId === ""}
           identifier="model-selector"
           text="Select as model"
+          Icon={BiSelectMultiple}
         />
       </ToolTip>
     </section>

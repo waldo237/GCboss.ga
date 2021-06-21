@@ -41,7 +41,7 @@ export default function SelectedClassroom() {
                   <strong>id:</strong> {id}
                 </p>
                 <p>
-                  <strong>name:</strong> {name}
+                  <strong>Name:</strong> {name}
                 </p>
                 <p>
                   <strong>description:</strong> {description}

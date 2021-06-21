@@ -1,5 +1,6 @@
 import { getHeaders } from "../components/signInFuncs";
 import {  StateInterface } from "../interfaces/interfaces";
+import { reportErr } from "./util";
 
 export async function createCourseWork(courseId: string, state: StateInterface, dispatch: Function) {
   const {  assignment } = state;
@@ -13,17 +14,15 @@ export async function createCourseWork(courseId: string, state: StateInterface, 
         }
         return res.json();
       })
-      .then(async (res: any) => {
-        // dispatch({ type: 'SET_LOGS', payload: [{ type: logTypes.ASSIGMENT, id: res.id }, ...logs] });
-      })
       .catch((er: any) => { throw new Error(er); });
     // dispatch({ type: 'SET_LOADING', payload: "" });
   } catch (error) {
     console.log(error)
-    // dispatch({ type: 'SET_ERROR', payload: [{ message: error.message }] });
+    reportErr('createCourseWork', courseId, error)
     // dispatch({ type: 'SET_LOADING', payload: "" });
   }
 }
+
 /**
  * Deletes a course work. This request must be made by the Developer Console
  *  project of the OAuth client ID used to create the corresponding course work item.
@@ -45,14 +44,11 @@ export async function deleteCourseWork(courseId: string, id: string, state: Stat
         await Promise.resolve(setTimeout(() => {}, 1000))
         return res.json();
       })
-      .then(async (res: any) => {
-        // dispatch({ type: 'SET_LOGS', payload: [{ type: logTypes.ASSIGMENT, id: res.id }, ...logs] });
-      })
       .catch((er: any) => { throw new Error(er); });
     // dispatch({ type: 'SET_LOADING', payload: "" });
   } catch (error) {
     console.log(error)
-    // dispatch({ type: 'SET_ERROR', payload: [{ message: error.message }] });
+    reportErr('deleteCourseWork', courseId, error)
     // dispatch({ type: 'SET_LOADING', payload: "" });
   }
 }

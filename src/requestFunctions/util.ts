@@ -1,6 +1,8 @@
 
 import { AssignmentInterface } from "../interfaces/interfaces";
-
+import { addError } from "../store/slices/errorSlice";
+import { storeRedux } from "../store/storeRedux";
+const dispatchRedux = storeRedux.dispatch;
 function sortByUpdateDate(a: AssignmentInterface, b: AssignmentInterface) {
   let c = new Date(b.updateTime);
   let d = new Date(a.updateTime);
@@ -28,6 +30,9 @@ class ColorFactory {
     return this.color;
   }
 }
+function reportErr(comingFrom:string, id:string, err:any){
+  dispatchRedux(addError({ comingFrom, id, date: new Date().toLocaleTimeString(), message: err.message }))
 
+}
 
-export { ColorFactory, sortByUpdateDate }
+export { ColorFactory, sortByUpdateDate, reportErr }

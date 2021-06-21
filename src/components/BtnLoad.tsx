@@ -9,12 +9,13 @@ export default function BtnLoad(props: {
   text: string;
   classNames?: string;
   directCallback?: boolean;
-  disableOn?:boolean
+  disableOn?:boolean,
+  Icon?: any
 }) {
   const [state, dispatch] = useContext(Context);
 
   const { loading, isLoggedIn } = state;
-  const { action, identifier, text, classNames, directCallback, disableOn } = props;
+  const { action, identifier, text, classNames, directCallback, disableOn,Icon } = props;
   function isLoading(str: string) {
     return loading === str;
   }
@@ -31,8 +32,8 @@ export default function BtnLoad(props: {
         }}
         disabled={!isLoggedIn || isLoading(identifier) || disableOn}
       >
-        {!isLoading(identifier) ? (
-          <span>{text}</span>
+         {!isLoading(identifier) ? (
+         <span>{Icon && <Icon/>} {text}</span>
         ) : (
           <FaCircleNotch size={30} className={styles.spin} />
         )}

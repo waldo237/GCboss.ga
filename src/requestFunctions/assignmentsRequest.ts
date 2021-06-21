@@ -4,6 +4,7 @@ import { getHeaders } from "../components/signInFuncs";
 import { createCourseWork, deleteCourseWork } from "./classWorkRequests";
 import { createCourseWorkMaterials, deleteCourseWorkMaterials, getCourseWorkMaterials } from "./courseWorkMaterialsRequests";
 import { getCoursesArray } from "./courseRequests";
+import { reportErr } from "./util";
 
 /**
  * Returns a list of course work and course work material that the requester is permitted to view.
@@ -11,9 +12,6 @@ import { getCoursesArray } from "./courseRequests";
  * @param dispatch
  * @returns
  */
-
-
-
 async function getAssignments(id: string, dispatch: Function) {
   if (!id)
     return dispatch({ type: 'SET_ERROR', payload: [{ message: 'no id was provided to assignment function.' }] });
@@ -32,8 +30,8 @@ async function getAssignments(id: string, dispatch: Function) {
       .catch((er: any) => { throw new Error(er); });
 
   } catch (error) {
-    // dispatch({ type: 'SET_ERROR', payload: [{ message: error.message }] });
     console.log(error)
+    reportErr('getAssignmentArray', id, error)
   }
 
 }
@@ -52,9 +50,7 @@ async function getAssignmentArray(courseId: string, dispatch: Function) {
 
   } catch (error) {
     console.log(error)
-    //  dispatch({
-    // type: 'SET_ERROR', payload: [{ message: error.message }]
-    // });
+    reportErr('getAssignmentArray', courseId, error)
   }
   return results;
 }
@@ -63,47 +59,32 @@ async function createAssignments(courseId: string,
   selectedAssignments: AssignmentInterface[], selectedTopics: TopicInterface[],
   state: StateInterface, dispatch: Function) {
   const targetTopics = await getTopicArray(courseId, dispatch);
-  // console.log(`selectedAssignments`, typeof selectedAssignments)
-  // console.log(`selectedTopics`, typeof selectedTopics)
-  // let breaker: boolean = false;
- 
+
   try {
     for await (const assignment of selectedAssignments) {
       const selectedTopic = selectedTopics.find((topic) => topic.topicId === assignment.topicId)
-      // console.log(`before selectedTopic`, selectedTopic)
       if (selectedTopic) {
 
-        // console.log('ids comparizon', `${selectedTopic.topicId}-- ${assignment.topicId}`)
-        // if (selectedTopic.topicId === assignment.topicId) {
         const targetTopic = targetTopics.filter((targetTopic) => targetTopic.name === selectedTopic.name)[0]
-        // console.log('name comparizon', `${targetTopic.name}-- ${selectedTopic.name}`)
 
-        // console.log('targetTopic', targetTopic.topicId)
         delete assignment['id']; //delete the id because is an invalid argument
         delete assignment['courseId']; //delete the courseId because is an invalid argument
         delete assignment['creatorUserId']; //delete the courseId because is an invalid argument
-
-        //  const { topicId } = assignment;
-        // let tempTopicId = targetCourseTopicIds[topicId]; //get the associate value with that key
-        //  const tempTopicId = sessionStorage.getItem(`${courseId}=${topicId}`)
 
         assignment.topicId = targetTopic.topicId;
 
         //swap the value before sending the request.
         if (!assignment['workType']) {
-          await createCourseWorkMaterials(courseId, { ...state, assignment }, dispatch); //mock
-          // console.log('createCourseWorkMaterials', `${assignment.topicId}--- ${assignment.title}`)
-
+          await createCourseWorkMaterials(courseId, { ...state, assignment }, dispatch);
         } else {
-          // console.log('createCourseWork', `${assignment.topicId}--- ${assignment.title}`)
           await createCourseWork(courseId, { ...state, assignment }, dispatch); //mock
-
         }
+
       }
     }
   } catch (error) {
     console.log(error)
-    // dispatch({ type: 'SET_ERROR', payload: [{ message: error.message }, ...state.error] });
+    reportErr('createAssignments', "", error)
   }
 }
 
@@ -141,7 +122,7 @@ async function undoOldActions(state: StateInterface, dispatch: Function) {
             } else {
               await deleteCourseWork(courseToBeEdited.id, id!, state, dispatch); //mock
             }
-            await Promise.resolve(setTimeout(() => {}, 2000))
+            await Promise.resolve(setTimeout(() => { }, 2000))
           }
         }
         breaker = error.length > 0;
@@ -163,8 +144,7 @@ async function undoOldActions(state: StateInterface, dispatch: Function) {
     })
   } catch (error) {
     console.log(error)
-    // dispatch(setError([{ message: error.message }, ...error] ));
-    // dispatch({ type: 'SET_ERROR', payload: [{ message: error.message }] });
+    reportErr('undoOldActions', "", error)
   }
 }
 

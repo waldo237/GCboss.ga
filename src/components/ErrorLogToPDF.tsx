@@ -72,7 +72,7 @@ export default function MyDocument(props: {
             <View style={styles.tableRow} break>
               <View style={styles.tableCol} wrap>
                 <Text style={styles.tableCell} wrap>
-                  {error.courseId}
+                  {error.id}
                 </Text>
               </View>
               <View style={styles.tableCol} wrap>

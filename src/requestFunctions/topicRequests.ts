@@ -1,9 +1,6 @@
 import { StateInterface, TopicInterface } from "../interfaces/interfaces";
 import { getHeaders } from "../components/signInFuncs";
-import { sortByUpdateDate } from "./util";
-import { storeRedux } from "../store/storeRedux";
-import { addError } from "../store/slices/errorSlice";
-const dispatchRedux = storeRedux.dispatch;
+import { reportErr, sortByUpdateDate } from "./util";
 /**
  * Creates a topic in the specified classroom
  * sets SET_TARGET_TOPIC_IDS with the id of the newly created topic in the target Classroom
@@ -27,22 +24,18 @@ async function createTopic(courseId: string, state: StateInterface, dispatch: Fu
         return res.json();
       })
       .then(async (res: any) => {
-        const { topicId } = topic; //extract the id from the original topic
-        const { topicId: targetTopicId } = res; //extract and rename from the newly created topic
+        // const { topicId } = topic; //extract the id from the original topic
+        // const { topicId: targetTopicId } = res; //extract and rename from the newly created topic
         // await sessionStorage.setItem(`${courseId}=${topicId}`, targetTopicId)
         // targetCourseTopicIds[topicId] = targetTopicId; //save it as a key-value pair to associate it.
         // dispatch({ type: 'SET_TARGET_TOPIC_IDS', payload: { ...targetCourseTopicIds } });
-
-        // dispatch({ type: 'SET_LOGS', payload: [{ type: logTypes.TOPIC, targetTopicId }, ...logs] });
       })
       .catch((er: any) => { throw new Error(er); });
     // dispatch({ type: 'SET_LOADING', payload: "" });
   } catch (error) {
     console.log(error)
-
     // dispatch({ type: 'SET_LOADING', payload: "" });
     throw error;
-
   }
 }
 
@@ -67,9 +60,10 @@ async function getAllTopics(id: string, dispatch: Function) {
 
   } catch (error) {
     console.log(error)
-    // dispatch({ type: 'SET_ERROR', payload: [{ message: error.message }] });
+    reportErr('getAllTopics', id, error)
   }
 }
+
 /**
  * Returns the list of topics that the requester is permitted to view
  * @param id 
@@ -85,7 +79,7 @@ async function getTopicArray(courseId: string, dispatch: Function) {
 
   } catch (error) {
     console.log(error)
-    // dispatch({ type: 'SET_ERROR', payload: [{ message: error.message }] });
+    reportErr('getTopicArray', courseId, error)
   }
   return results;
 }
@@ -108,11 +102,9 @@ async function createTopics(courseId: string, state: StateInterface, dispatch: F
       }
       breaker = state.error.length > 0;
     }
-
-  } catch (error) {
+  } catch (error:any) {
     console.log(error)
-    dispatchRedux(addError({ comingFrom: 'createTopics', courseId, date: new Date().toLocaleTimeString(), message: error.message }))
-    // dispatch({ type: 'SET_ERROR', payload: [{ message: error.message }, ...state.error] });
+    reportErr('createTopics', courseId, error)
   }
 }
 
@@ -125,7 +117,7 @@ async function deleteTopic(courseId: string, id: string, state: StateInterface, 
           const er = await res.json();
           throw new Error(er.error.message);
         }
-        await Promise.resolve(setTimeout(() => {}, 1000))
+        await Promise.resolve(setTimeout(() => { }, 1000))
         return res.json();
       })
       .then(async (res: any) => {
@@ -135,7 +127,7 @@ async function deleteTopic(courseId: string, id: string, state: StateInterface, 
     // dispatch({ type: 'SET_LOADING', payload: "" });
   } catch (error) {
     console.log(error)
-    // dispatch({ type: 'SET_ERROR', payload: [{ message: error.message }] });
+    reportErr('deleteTopic', courseId, error)
     // dispatch({ type: 'SET_LOADING', payload: "" });
   }
 }

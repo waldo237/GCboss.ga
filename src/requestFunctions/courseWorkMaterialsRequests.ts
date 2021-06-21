@@ -1,5 +1,6 @@
 import {  StateInterface } from "../interfaces/interfaces";
 import { getHeaders } from "../components/signInFuncs";
+import { reportErr } from "./util";
 /**
  * Creates a course work material.
  * @param courseId 
@@ -19,19 +20,15 @@ async function createCourseWorkMaterials(courseId: string, state: StateInterface
         }
         return res.json();
       })
-      .then(async (res: any) => {
-        // dispatch({ type: 'SET_LOGS', payload: [{ type: logTypes.MATERIAL, id: res.id }, ...logs] });
-      })
       .catch((er: any) => { throw new Error(er); });
     // dispatch({ type: 'SET_LOADING', payload: "" });
   } catch (error) {
     console.log(error)
     // dispatch({ type: 'SET_LOADING', payload: "" });
-    // dispatch({
-    //   type: 'SET_ERROR', payload: [{ message: error.message }]
-    // });
+    reportErr('createCourseWorkMaterials', courseId, error)
   }
 }
+
 /**
  * Returns a list of course work material that the requester is permitted to view.
  * @param id 
@@ -69,14 +66,11 @@ async function deleteCourseWorkMaterials(courseId: string,id: string, state: Sta
         await Promise.resolve(setTimeout(() => {}, 1000 ))
         return res.json();
       })
-      .then(async (res: any) => {
-        // dispatch({ type: 'SET_LOGS', payload: [{ type: logTypes.ASSIGMENT, id: res.id }, ...logs] });
-      })
       .catch((er: any) => { throw new Error(er); });
     // dispatch({ type: 'SET_LOADING', payload: "" });
   } catch (error) {
     console.log(error)
-    // dispatch({ type: 'SET_ERROR', payload: [{ message: error.message }] });
+    reportErr('deleteCourseWorkMaterials', courseId, error)
     // dispatch({ type: 'SET_LOADING', payload: "" });
   }
 }

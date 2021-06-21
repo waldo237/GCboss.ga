@@ -1,5 +1,6 @@
 import React, { useContext } from "react";
 import styles from "../App.module.scss";
+import {AiOutlineCloudDownload} from 'react-icons/ai'
 import { Context } from "../store/store";
 import ClassroomSelector from "../components/ClassroomSelector";
 import Table from "../components/Table";
@@ -19,6 +20,7 @@ export default function Courses() {
           identifier="GetlistofBtn"
           text="Load classrooms"
           classNames={styles.green}
+          Icon={AiOutlineCloudDownload}
         />
         <ClassroomSelector />
 

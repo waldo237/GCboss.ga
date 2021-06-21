@@ -1,5 +1,10 @@
 import React, { useContext} from "react";
 import styles from "../App.module.scss";
+import {IoArrowUndoCircleSharp,} from 'react-icons/io5'
+import {FaRobot,FaRegCopy, FaUndoAlt} from 'react-icons/fa'
+import {FiDownloadCloud} from 'react-icons/fi'
+import {GiHand} from 'react-icons/gi'
+import {SiProbot } from 'react-icons/si'
 
 import {
   createAssignments,
@@ -7,7 +12,7 @@ import {
 } from "../requestFunctions/assignmentsRequest";
 import { createTopics } from "../requestFunctions/topicRequests";
 import { Context } from "../store/store";
-import Table from "../components/Table";
+// import Table from "../components/Table";
 import Progress from "../components/Progress";
 import {getAllCourses,getCoursesArray} from "../requestFunctions/courseRequests";
 import BtnLoad from "../components/BtnLoad";
@@ -51,7 +56,8 @@ export default function CopyAssignmentsToNewClassroom() {
     <section className={styles.mainContainerCopy}>
       <h2>CopyAssignments</h2>
       <div>
-        <ol className={styles.cols}>
+        <ol className={`${styles.cols} ${styles.list}`}>
+          <h3>Manual Process <GiHand/></h3>
           <li>
             <p>Get the list of all your classrooms</p>
 
@@ -59,6 +65,7 @@ export default function CopyAssignmentsToNewClassroom() {
               action={getAllCourses}
               identifier="button-1"
               text="Load my Classrooms"
+              Icon={FiDownloadCloud}
             />
             {courses && courses.length ? (
               <Progress value={courses.length} total={courses.length} />
@@ -71,6 +78,7 @@ export default function CopyAssignmentsToNewClassroom() {
               action={createTopics}
               identifier="button-2"
               text="Copy Topics"
+              Icon={FaRegCopy}
             />
           </li>
 
@@ -80,32 +88,37 @@ export default function CopyAssignmentsToNewClassroom() {
               action={createAssignments}
               identifier="button-3"
               text="Copy Assignments"
+              Icon={FaRegCopy}
               />
           </li>
         </ol>
         <hr />
 
-          <p> Do all operations at once</p>
-        <div className={styles.cols}>
+        <div className={`${styles.cols} ${styles.list}`}>
+          <h3>Automatic Process <FaRobot/></h3>
           <BtnLoad
             action={chainedActions}
             identifier="button-4"
             text="😏copy entire blueprint😏"
+            Icon={SiProbot}
             />
         </div>
             {(total) ?<Progress value={progress} total={total} />:null} 
         <div>
         <hr />
-          <p> Undo the previous operations</p>
+        <div className={`${styles.cols} ${styles.list}`}>
+          <h3> Undo the previous operations <IoArrowUndoCircleSharp/></h3>
           <BtnLoad
             action={() => undoOldActions(state, dispatch)}
             identifier="button-5"
             text="undo actions"
             classNames={styles.red}
+            Icon={FaUndoAlt}
           />
+          </div>
         </div>
       </div>
-      <h4>monitor operations</h4>
+      {/* <h4>monitor operations</h4>
       <h5>⬇</h5>
       <div>
         <Table
@@ -113,7 +126,7 @@ export default function CopyAssignmentsToNewClassroom() {
           items={courses}
           selection={["name", "completed", "id", "section"]}
         />
-      </div>
+      </div> */}
     </section>
   );
 }

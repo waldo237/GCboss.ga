@@ -2,7 +2,7 @@ import {  createSlice, PayloadAction } from '@reduxjs/toolkit';
 import {  RootState } from '../storeRedux';
 
 export interface ErrorState {
-  courseId: string;
+  id: string;
   date: string;
   message:string;
   comingFrom:string
