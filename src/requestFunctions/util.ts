@@ -1,6 +1,7 @@
 
 import { AssignmentInterface } from "../interfaces/interfaces";
 import { addError } from "../store/slices/errorSlice";
+import { resetLoading, setLoadingB } from "../store/slices/loadingSlice";
 import { storeRedux } from "../store/storeRedux";
 const dispatchRedux = storeRedux.dispatch;
 function sortByUpdateDate(a: AssignmentInterface, b: AssignmentInterface) {
@@ -34,5 +35,12 @@ function reportErr(comingFrom:string, id:string, err:any){
   dispatchRedux(addError({ comingFrom, id, date: new Date().toLocaleTimeString(), message: err.message }))
 
 }
+function stopLoadingButton(){
+  dispatchRedux(resetLoading())
+}
 
-export { ColorFactory, sortByUpdateDate, reportErr }
+function labelLoadingngButton(s:string){
+  dispatchRedux(setLoadingB(s))
+}
+
+export { ColorFactory, sortByUpdateDate, reportErr, resetLoading, stopLoadingButton, labelLoadingngButton }

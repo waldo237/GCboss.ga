@@ -56,11 +56,7 @@ const Reducer = (state:any, action:{type:string, payload:any}) => {
                 ...state,
                 logs:  action.payload
             };
-        case 'SET_LOADING':
-            return {
-                ...state,
-                loading:  action.payload
-            };
+
         default:
             return state;
     }

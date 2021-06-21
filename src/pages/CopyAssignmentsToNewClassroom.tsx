@@ -19,6 +19,7 @@ import BtnLoad from "../components/BtnLoad";
 import { CourseInterface} from "../interfaces/interfaces";
 import { useAppSelector, useAppDispatch } from '../store/hooks';
 import {incrementProgress, selectProgress, setTotal, selectTotal} from '../store/slices/progressSlice';
+import { stopLoadingButton } from "../requestFunctions/util";
 
 export default function CopyAssignmentsToNewClassroom() {
   const progress = useAppSelector(selectProgress);
@@ -47,7 +48,7 @@ export default function CopyAssignmentsToNewClassroom() {
           );
           dispatchRedux(incrementProgress(1));
         }
-        dispatch({ type: "SET_LOADING", payload: "" });
+        stopLoadingButton()
     } catch (error) {
       console.log(error);
     }

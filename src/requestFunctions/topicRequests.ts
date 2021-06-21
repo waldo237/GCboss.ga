@@ -31,10 +31,8 @@ async function createTopic(courseId: string, state: StateInterface, dispatch: Fu
         // dispatch({ type: 'SET_TARGET_TOPIC_IDS', payload: { ...targetCourseTopicIds } });
       })
       .catch((er: any) => { throw new Error(er); });
-    // dispatch({ type: 'SET_LOADING', payload: "" });
   } catch (error) {
     console.log(error)
-    // dispatch({ type: 'SET_LOADING', payload: "" });
     throw error;
   }
 }
@@ -120,15 +118,10 @@ async function deleteTopic(courseId: string, id: string, state: StateInterface, 
         await Promise.resolve(setTimeout(() => { }, 1000))
         return res.json();
       })
-      .then(async (res: any) => {
-        // dispatch({ type: 'SET_LOGS', payload: [{ type: logTypes.ASSIGMENT, id: res.id }, ...logs] });
-      })
       .catch((er: any) => { throw new Error(er); });
-    // dispatch({ type: 'SET_LOADING', payload: "" });
   } catch (error) {
     console.log(error)
     reportErr('deleteTopic', courseId, error)
-    // dispatch({ type: 'SET_LOADING', payload: "" });
   }
 }
 export { createTopics, getAllTopics, deleteTopic, getTopicArray }

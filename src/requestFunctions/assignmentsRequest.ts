@@ -4,7 +4,7 @@ import { getHeaders } from "../components/signInFuncs";
 import { createCourseWork, deleteCourseWork } from "./classWorkRequests";
 import { createCourseWorkMaterials, deleteCourseWorkMaterials, getCourseWorkMaterials } from "./courseWorkMaterialsRequests";
 import { getCoursesArray } from "./courseRequests";
-import { reportErr } from "./util";
+import { reportErr, stopLoadingButton } from "./util";
 
 /**
  * Returns a list of course work and course work material that the requester is permitted to view.
@@ -140,7 +140,7 @@ async function undoOldActions(state: StateInterface, dispatch: Function) {
           breaker = error.length > 0;
         }
       }
-      dispatch({ type: 'SET_LOADING', payload: "" });
+      stopLoadingButton()
     })
   } catch (error) {
     console.log(error)

@@ -1,6 +1,6 @@
 import { UserInterface } from "../interfaces/interfaces";
 import { getHeaders } from "../components/signInFuncs";
-import { reportErr } from "./util";
+import { reportErr, stopLoadingButton } from "./util";
 
 /**
  * @function Returns a list of courses that the requesting user is permitted to view,
@@ -18,12 +18,12 @@ async function getAllCourses<T>(dispatch: Function): Promise<T[]> {
       .catch((error: any) => {
         throw new Error(error);
       });
-    dispatch({ type: 'SET_LOADING', payload: "" });
+      stopLoadingButton()
 
   } catch (error) {
     console.log(error)
     reportErr('getAllCourses', '', error)
-    dispatch({ type: 'SET_LOADING', payload: "" });
+    stopLoadingButton()
   }
   return [];
 }
@@ -44,7 +44,6 @@ async function getCoursesArray<T>(dispatch: Function): Promise<T[]> {
 
         } else {
           reportErr('getCoursesArray', '', 'There were no classrooms to do this operations upon.')
-          // dispatch({ type: 'SET_LOADING', payload: "" });
         }
       })
       .catch((error: any) => {
@@ -78,11 +77,11 @@ async function getCourse(id: string, profile: { user: UserInterface; }, dispatch
         localStorage.setItem('selectedClassroom', JSON.stringify(modifiedRes));
       })
       .catch((er: any) => { throw new Error(er); });
-    dispatch({ type: 'SET_LOADING', payload: "" });
+      stopLoadingButton()
   } catch (error) {
     console.log(error)
     reportErr('getCoursesArray', id, error)
-    dispatch({ type: 'SET_LOADING', payload: "" });
+    stopLoadingButton()
   }
   return null;
 }

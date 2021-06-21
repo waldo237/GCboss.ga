@@ -21,10 +21,8 @@ async function createCourseWorkMaterials(courseId: string, state: StateInterface
         return res.json();
       })
       .catch((er: any) => { throw new Error(er); });
-    // dispatch({ type: 'SET_LOADING', payload: "" });
   } catch (error) {
     console.log(error)
-    // dispatch({ type: 'SET_LOADING', payload: "" });
     reportErr('createCourseWorkMaterials', courseId, error)
   }
 }
@@ -67,11 +65,9 @@ async function deleteCourseWorkMaterials(courseId: string,id: string, state: Sta
         return res.json();
       })
       .catch((er: any) => { throw new Error(er); });
-    // dispatch({ type: 'SET_LOADING', payload: "" });
   } catch (error) {
     console.log(error)
     reportErr('deleteCourseWorkMaterials', courseId, error)
-    // dispatch({ type: 'SET_LOADING', payload: "" });
   }
 }
 

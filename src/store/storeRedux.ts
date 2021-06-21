@@ -1,11 +1,13 @@
 import { configureStore, ThunkAction, Action } from '@reduxjs/toolkit';
 import errorSlice from './slices/errorSlice';
 import progressReducer from './slices/progressSlice';
+import loadingSlice from './slices/loadingSlice';
 import { composeWithDevTools } from 'redux-devtools-extension';
 export const storeRedux = configureStore({
   reducer: {
     progress: progressReducer,
-    error:errorSlice
+    error:errorSlice,
+    loading:loadingSlice
   },
   devTools:(window as any).__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || composeWithDevTools()
 });

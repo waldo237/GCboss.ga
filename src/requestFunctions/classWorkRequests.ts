@@ -15,11 +15,11 @@ export async function createCourseWork(courseId: string, state: StateInterface, 
         return res.json();
       })
       .catch((er: any) => { throw new Error(er); });
-    // dispatch({ type: 'SET_LOADING', payload: "" });
+    // stopLoadingButton()
   } catch (error) {
     console.log(error)
     reportErr('createCourseWork', courseId, error)
-    // dispatch({ type: 'SET_LOADING', payload: "" });
+    // stopLoadingButton()
   }
 }
 
@@ -45,10 +45,10 @@ export async function deleteCourseWork(courseId: string, id: string, state: Stat
         return res.json();
       })
       .catch((er: any) => { throw new Error(er); });
-    // dispatch({ type: 'SET_LOADING', payload: "" });
+    // stopLoadingButton()
   } catch (error) {
     console.log(error)
     reportErr('deleteCourseWork', courseId, error)
-    // dispatch({ type: 'SET_LOADING', payload: "" });
+    // stopLoadingButton()
   }
 }

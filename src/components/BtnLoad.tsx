@@ -2,7 +2,9 @@ import React, { useContext } from "react";
 import { FaCircleNotch } from "react-icons/fa";
 import styles from "../App.module.scss";
 import { Context } from "../store/store";
-
+import { selectLoading } from '../store/slices/loadingSlice';
+import { labelLoadingngButton } from "../requestFunctions/util";
+import { useAppSelector } from "../store/hooks";
 export default function BtnLoad(props: {
   action: Function;
   identifier: string;
@@ -13,8 +15,8 @@ export default function BtnLoad(props: {
   Icon?: any
 }) {
   const [state, dispatch] = useContext(Context);
-
-  const { loading, isLoggedIn } = state;
+  const loading = useAppSelector(selectLoading);
+  const { isLoggedIn } = state;
   const { action, identifier, text, classNames, directCallback, disableOn,Icon } = props;
   function isLoading(str: string) {
     return loading === str;
@@ -28,7 +30,7 @@ export default function BtnLoad(props: {
         }`}
         onClick={() => {
           directCallback ? action() : action(dispatch);
-          dispatch({ type: "SET_LOADING", payload: identifier });
+          labelLoadingngButton(identifier)
         }}
         disabled={!isLoggedIn || isLoading(identifier) || disableOn}
       >
