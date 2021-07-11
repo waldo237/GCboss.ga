@@ -28,7 +28,7 @@ export default function Courses() {
           title={"Classrooms in this account"}
           selection={["courseState", "name", "id"]}
           items={courses}
-        ></Table>
+        ></Table> 
       </div>
     </div>
   );

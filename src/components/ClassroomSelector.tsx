@@ -1,4 +1,4 @@
-import React, { useContext, useMemo } from "react";
+import React, { useContext } from "react";
 import styles from "../App.module.scss";
 import {BiSelectMultiple} from 'react-icons/bi'
 import { getAssignments } from "../requestFunctions/assignmentsRequest";
@@ -16,7 +16,6 @@ export default function ClassroomSelector() {
   const [state, dispatch] = useContext(Context);
   const { courses, courseId, profile } = state;
   const courseIds = courses ? courses.map((c: any) => c.id) : [];
-  const memoizedCourseId = useMemo(() => courseId, [courseId]);
 
   return (
     <section className={styles.cols}>
@@ -24,7 +23,7 @@ export default function ClassroomSelector() {
       <select
         name="courseId"
         onChange={(e) => getInput(e, dispatch)}
-        value={memoizedCourseId || "default"}
+        value={courseId || "default"}
       >
         <option value="default" disabled>
           --pick classroom id of model to start operations...--
