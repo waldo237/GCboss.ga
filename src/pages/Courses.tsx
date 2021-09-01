@@ -1,6 +1,6 @@
 import React, { useContext } from "react";
 import styles from "../App.module.scss";
-import {AiOutlineCloudDownload} from 'react-icons/ai'
+import { AiOutlineCloudDownload } from "react-icons/ai";
 import { Context } from "../store/store";
 import ClassroomSelector from "../components/ClassroomSelector";
 import Table from "../components/Table";
@@ -8,13 +8,12 @@ import { getAllCourses } from "../requestFunctions/courseRequests";
 import BtnLoad from "../components/BtnLoad";
 
 export default function Courses() {
-  const [state ] = useContext(Context);
+  const [state] = useContext(Context);
   const { courses } = state;
 
   return (
     <div className={styles.container}>
       <div className={styles.list}>
-     
         <BtnLoad
           action={getAllCourses}
           identifier="GetlistofBtn"
@@ -28,7 +27,7 @@ export default function Courses() {
           title={"Classrooms in this account"}
           selection={["courseState", "name", "id"]}
           items={courses}
-        ></Table> 
+        ></Table>
       </div>
     </div>
   );

@@ -18,7 +18,11 @@ import {
   getCoursesArray,
 } from "../requestFunctions/courseRequests";
 import BtnLoad from "../components/BtnLoad";
-import { CourseInterface } from "../interfaces/interfaces";
+import {
+  AssignmentInterface,
+  CourseInterface,
+  TopicInterface,
+} from "../interfaces/interfaces";
 import { useAppSelector, useAppDispatch } from "../store/hooks";
 import {
   incrementProgress,
@@ -40,20 +44,25 @@ export default function CopyAssignmentsToNewClassroom() {
 
   async function chainedActions() {
     try {
-      const coursesToBeEdited: CourseInterface[] = await getCoursesArray<CourseInterface>(dispatch);
+      const coursesToBeEdited: CourseInterface[] = await getCoursesArray(
+        dispatch
+      );
+
       dispatchRedux(setTotal(coursesToBeEdited.length));
-      const selectedAssignments = JSON.parse(
-        localStorage.getItem("selectedAssignments") || ""
-      ) as [];
-      
+
       const selectedTopics = JSON.parse(
         localStorage.getItem("selectedTopics") || ""
-      ) as [];
-      
+      ) as TopicInterface[];
+
       for (let i = 0; i < coursesToBeEdited.length; i++) {
         const courseReceivingChange = coursesToBeEdited[i];
+        const selectedAssignments = JSON.parse(
+          localStorage.getItem("selectedAssignments") || ""
+        ) as AssignmentInterface[];
+
         await createTopics(courseReceivingChange.id, state, dispatch);
 
+        //throttle to deal with Google quota
         createAssignments(
           courseReceivingChange.id,
           selectedAssignments,
@@ -61,6 +70,7 @@ export default function CopyAssignmentsToNewClassroom() {
           state,
           dispatch
         );
+
         dispatchRedux(incrementProgress(1));
       }
       stopLoadingButton();
@@ -121,7 +131,13 @@ export default function CopyAssignmentsToNewClassroom() {
                     const selectedTopics = JSON.parse(
                       localStorage.getItem("selectedTopics") || ""
                     ) as [];
-                    createAssignments(c.id,selectedAssignments, selectedTopics,state, dispatch);
+                    createAssignments(
+                      c.id,
+                      selectedAssignments,
+                      selectedTopics,
+                      state,
+                      dispatch
+                    );
                   });
                   stopLoadingButton();
                 }}
@@ -164,7 +180,6 @@ export default function CopyAssignmentsToNewClassroom() {
           </div>
         </div>
       </div>
-
     </section>
   );
 }

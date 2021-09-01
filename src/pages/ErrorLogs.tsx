@@ -22,7 +22,9 @@ export default function Home() {
   }, [errors])
   const getPfCb = useCallback(() => {
     return profile
-  }, [profile])
+  }, [
+    
+  ])
   return (
     <>
       <main className={styles.mainContainer}>
