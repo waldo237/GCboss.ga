@@ -61,7 +61,6 @@ export default function CopyAssignmentsToNewClassroom() {
         ) as AssignmentInterface[];
 
         await createTopics(courseReceivingChange.id, state, dispatch);
-
         //throttle to deal with Google quota
         createAssignments(
           courseReceivingChange.id,
