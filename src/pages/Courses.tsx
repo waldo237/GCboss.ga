@@ -12,6 +12,8 @@ export default function Courses() {
   const [state] = useContext(Context);
   const { courses } = state;
 
+
+
   return (
     <div className={styles.container}>
       <div className={styles.list}>
